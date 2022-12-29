@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: song-api
+  labels:
+    app: song-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: song-api
+  template:
+    metadata:
+      labels:
+        app: song-api
+    spec:
+      containers:
+        - name: song-api-image
+          image: aminfelah/song-api-micro-service
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 248Mi
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8089
+      imagePullSecrets:
+        - name: regcred
